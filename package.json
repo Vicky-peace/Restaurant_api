@@ -2,26 +2,31 @@
   "name": "restaurant",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "main.ts",
   "scripts": {
-    "dev": "tsx watch ./src/index.ts",
+    "dev": "tsx watch ./src/main.ts",
     "build": "tsc",
     "start": "node ./dist/index.js",
     "gen": "drizzle-kit generate",
     "migrate": "tsx src/drizzle/migrate.ts",
-    "studio" : "drizzle-kit studio",
+    "studio": "drizzle-kit studio",
     "push": " drizzle-kit generate && tsx src/drizzle/migrate.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hono/node-server": "^1.11.2",
+    "@hono/prometheus": "^1.0.1",
+    "@hono/zod-validator": "^0.2.2",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.31.0",
     "drizzle-orm-pg": "^0.16.3",
     "hono": "^4.4.3",
     "nodemon": "^3.1.2",
-    "pg": "^8.11.5"
+    "pg": "^8.11.5",
+    "prom-client": "^15.1.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",

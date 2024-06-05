@@ -8,15 +8,24 @@ importers:
 
   .:
     dependencies:
+      '@hono/node-server':
+        specifier: ^1.11.2
+        version: 1.11.2
+      '@hono/prometheus':
+        specifier: ^1.0.1
+        version: 1.0.1(hono@4.4.3)(prom-client@15.1.2)
+      '@hono/zod-validator':
+        specifier: ^0.2.2
+        version: 0.2.2(hono@4.4.3)(zod@3.23.8)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
       drizzle-orm:
         specifier: ^0.31.0
-        version: 0.31.1(@types/pg@8.11.6)(pg@8.12.0)
+        version: 0.31.1(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(pg@8.12.0)
       drizzle-orm-pg:
         specifier: ^0.16.3
-        version: 0.16.3(@types/pg@8.11.6)(drizzle-orm@0.31.1(@types/pg@8.11.6)(pg@8.12.0))(pg@8.12.0)
+        version: 0.16.3(@types/pg@8.11.6)(drizzle-orm@0.31.1(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(pg@8.12.0))(pg@8.12.0)
       hono:
         specifier: ^4.4.3
         version: 4.4.3
@@ -26,6 +35,12 @@ importers:
       pg:
         specifier: ^8.11.5
         version: 8.12.0
+      prom-client:
+        specifier: ^15.1.2
+        version: 15.1.2
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@types/node':
         specifier: ^20.14.0
@@ -466,6 +481,22 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@hono/node-server@1.11.2':
+    resolution: {integrity: sha512-JhX0nUC66GeDxpIdMKWDRMEwtQBa64CY907iAF1sYqb4m2p2PdSU7zkbnNhAZLg/6IjSlTuj6CF307JlBXVvpg==}
+    engines: {node: '>=18.14.1'}
+
+  '@hono/prometheus@1.0.1':
+    resolution: {integrity: sha512-PjMbjAppCgbvRP2aLxqJc1XJLxfmg4dLsS5R5ITt7qCf9Ab/xSRul/LHNVvYK2/ECi3BOPprSnlSizksBJmXBQ==}
+    peerDependencies:
+      hono: '>=3.*'
+      prom-client: ^15.0.0
+
+  '@hono/zod-validator@0.2.2':
+    resolution: {integrity: sha512-dSDxaPV70Py8wuIU2QNpoVEIOSzSXZ/6/B/h4xA7eOMz7+AarKTSGV8E6QwrdcCbBLkpqfJ4Q2TmBO0eP1tCBQ==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.19.1
+
   '@jridgewell/resolve-uri@3.1.2':
     resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
     engines: {node: '>=6.0.0'}
@@ -475,6 +506,10 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
+
+  '@opentelemetry/api@1.8.0':
+    resolution: {integrity: sha512-I/s6F7yKUDdtMsoBWXJe8Qz40Tui5vsuKCWJEWVL+5q9sSWRzzx6v2KeNsOBEwd94j0eWkpWCH4yB6rZg9Mf0w==}
+    engines: {node: '>=8.0.0'}
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -522,6 +557,9 @@ packages:
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
+
+  bintrees@1.0.2:
+    resolution: {integrity: sha512-VOMgTMwjAaUG580SXn3LacVgjurrbMme7ZZNYGSSV7mmtY6QQRh0Eg3pwIcntQ77DErK1L0NxkbetjcoXzVwKw==}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -873,6 +911,10 @@ packages:
   postgres-range@1.1.4:
     resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
 
+  prom-client@15.1.2:
+    resolution: {integrity: sha512-on3h1iXb04QFLLThrmVYg1SChBQ9N1c+nKAjebBjokBqipddH3uxmOUcEkTnzmJ8Jh/5TSUnUqS40i2QB2dJHQ==}
+    engines: {node: ^16 || ^18 || >=20}
+
   pstree.remy@1.1.8:
     resolution: {integrity: sha512-77DZwxQmxKnu3aR542U+X8FypNzbfJ+C5XQDk3uWjWxn6151aIMGthWYRXTqT1E5oJvg+ljaa2OJi+VfvCOQ8w==}
 
@@ -927,6 +969,9 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  tdigest@0.1.2:
+    resolution: {integrity: sha512-+G0LLgjjo9BZX2MfdvPfH+MKLCrxlXSYec5DaPYP1fe6Iyhf0/fSmJ0bFiZ1F8BT6cGXl2LpltQptzjXKWEkKA==}
 
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
@@ -997,6 +1042,9 @@ packages:
   yn@3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
     engines: {node: '>=6'}
+
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
 snapshots:
 
@@ -1218,6 +1266,18 @@ snapshots:
   '@esbuild/win32-x64@0.20.2':
     optional: true
 
+  '@hono/node-server@1.11.2': {}
+
+  '@hono/prometheus@1.0.1(hono@4.4.3)(prom-client@15.1.2)':
+    dependencies:
+      hono: 4.4.3
+      prom-client: 15.1.2
+
+  '@hono/zod-validator@0.2.2(hono@4.4.3)(zod@3.23.8)':
+    dependencies:
+      hono: 4.4.3
+      zod: 3.23.8
+
   '@jridgewell/resolve-uri@3.1.2': {}
 
   '@jridgewell/sourcemap-codec@1.4.15': {}
@@ -1226,6 +1286,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  '@opentelemetry/api@1.8.0': {}
 
   '@tsconfig/node10@1.0.11': {}
 
@@ -1263,6 +1325,8 @@ snapshots:
   balanced-match@1.0.2: {}
 
   binary-extensions@2.3.0: {}
+
+  bintrees@1.0.2: {}
 
   brace-expansion@1.1.11:
     dependencies:
@@ -1309,15 +1373,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm-pg@0.16.3(@types/pg@8.11.6)(drizzle-orm@0.31.1(@types/pg@8.11.6)(pg@8.12.0))(pg@8.12.0):
+  drizzle-orm-pg@0.16.3(@types/pg@8.11.6)(drizzle-orm@0.31.1(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(pg@8.12.0))(pg@8.12.0):
     dependencies:
-      drizzle-orm: 0.31.1(@types/pg@8.11.6)(pg@8.12.0)
+      drizzle-orm: 0.31.1(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(pg@8.12.0)
     optionalDependencies:
       '@types/pg': 8.11.6
       pg: 8.12.0
 
-  drizzle-orm@0.31.1(@types/pg@8.11.6)(pg@8.12.0):
+  drizzle-orm@0.31.1(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(pg@8.12.0):
     optionalDependencies:
+      '@opentelemetry/api': 1.8.0
       '@types/pg': 8.11.6
       pg: 8.12.0
 
@@ -1578,6 +1643,11 @@ snapshots:
 
   postgres-range@1.1.4: {}
 
+  prom-client@15.1.2:
+    dependencies:
+      '@opentelemetry/api': 1.8.0
+      tdigest: 0.1.2
+
   pstree.remy@1.1.8: {}
 
   readdirp@3.6.0:
@@ -1620,6 +1690,10 @@ snapshots:
       has-flag: 3.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  tdigest@0.1.2:
+    dependencies:
+      bintrees: 1.0.2
 
   to-regex-range@5.0.1:
     dependencies:
@@ -1692,3 +1766,5 @@ snapshots:
   xtend@4.0.2: {}
 
   yn@3.1.1: {}
+
+  zod@3.23.8: {}
