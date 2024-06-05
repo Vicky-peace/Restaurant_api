@@ -4,7 +4,8 @@ import { serve } from '@hono/node-server'
 import { HTTPException } from 'hono/http-exception';
 
 
-
+//Routes imports
+import { userRouter } from './users/user.router';
 
 
 const app = new Hono().basePath("/api")
@@ -28,6 +29,9 @@ const custonTimeoutException = () =>
         await new Promise((resolve) => setTimeout(resolve, 11000))
         return c.text("data after 5 seconds", 200)
     })
+
+    //custom routes 
+    app.route("/", userRouter)
 
 
     serve({

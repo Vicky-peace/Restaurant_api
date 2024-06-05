@@ -2,3 +2,11 @@ import { TIUser, TSUser, TIAddress, TSAddress, TICity, TSCity, TIState, TSState,
 import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
 
+export const userService = async (limit?: number) : Promise<TSUser[] | null> =>{
+    if(limit){
+        return await db.query.Users.findMany({
+            limit: limit
+        });
+    }
+    return await db.query.Users.findMany();
+}
