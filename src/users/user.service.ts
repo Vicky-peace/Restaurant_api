@@ -16,3 +16,8 @@ export const getUserService = async (id: number): Promise<TIUser | undefined> =>
     where: eq(Users.id, id),
   })
 }
+
+export const createUserService = async (user: TIUser) => {
+    await db.insert(Users).values(user)
+    return "User created successfully";
+}

@@ -1,5 +1,7 @@
 import { Context } from "hono";
-import {userService,getUserService} from './user.service';
+import {userService,getUserService,createUserService} from './user.service';
+import { TIUser, Users } from "../drizzle/schema";
+import db from "../drizzle/db";
 
 export const listUsers = async (c: Context) =>{
     try{
@@ -24,4 +26,18 @@ export const getUser = async (c: Context) =>{
         return c.text("User not found", 404);
     }
     return c.json(user, 200);
+}
+
+
+export const createUser = async (c: Context) =>{
+    try{
+        const user = await c.req.json();
+        const createdUser = await createUserService(user);
+        
+        if(!createdUser) return c.text("User not created", 404);
+        return c.json({msg: createdUser}, 201);
+
+    }catch(error: any){
+        return c.json({error: error?.message}, 400)
+    }
 }
