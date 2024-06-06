@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
 import { TSRestaurant,TIRestaurant, Restaurant } from "../drizzle/schema";
+import { Context } from "hono"
 
 export const getRestaurantService = async (limit?: number): Promise<TSRestaurant[]> => {
     if(limit){
@@ -20,3 +21,8 @@ export const getSingleRestaurantService = async (id: number): Promise<TSRestaura
     });
     return restaurant ?? null;
 };
+
+export const createRestaurantService = async (restaurant: TSRestaurant) =>{
+    await db.insert(Restaurant).values(restaurant)
+    return "Restaurant created successfully";
+}

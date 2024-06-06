@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { getRestaurantService, getSingleRestaurantService } from "./restaurant.service";
+import { getRestaurantService, getSingleRestaurantService,createRestaurantService } from "./restaurant.service";
 
 export const listRestaurants = async (c: Context) => {
     try{
@@ -25,6 +25,20 @@ export const getSingleRestaurant = async (c: Context) => {
             return c.text('No data found', 404)
         }
         return c.json(data, 200);
+    } catch(error: any){
+        return c.json({error: error?.message}, 400)
+    }
+}
+
+
+export const createRestaurant = async (c: Context) => {
+    try{
+        const restaurant = await c.req.json();
+        const createdRestaurant = await createRestaurantService(restaurant);
+        
+        if(!createdRestaurant)  return c.text('Restaurant not created', 400);
+        return c.json({msg: createdRestaurant}, 201)
+        
     } catch(error: any){
         return c.json({error: error?.message}, 400)
     }
