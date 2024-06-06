@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { getRestaurantService, getSingleRestaurantService,createRestaurantService } from "./restaurant.service";
+import { getRestaurantService, getSingleRestaurantService,createRestaurantService, updateRestaurantService } from "./restaurant.service";
 
 export const listRestaurants = async (c: Context) => {
     try{
@@ -38,6 +38,21 @@ export const createRestaurant = async (c: Context) => {
         
         if(!createdRestaurant)  return c.text('Restaurant not created', 400);
         return c.json({msg: createdRestaurant}, 201)
+        
+    } catch(error: any){
+        return c.json({error: error?.message}, 400)
+    }
+}
+
+export const updateRestaurant = async (c: Context) => {
+    try{
+        const id = parseInt(c.req.param("id"));
+        if(isNaN(id)) return c.text('Invalid id', 400);
+        const restaurant = await c.req.json();
+        const updatedRestaurant = await updateRestaurantService(id, restaurant);
+        
+        if(!updatedRestaurant)  return c.text('Restaurant not updated', 400);
+        return c.json({msg: updatedRestaurant}, 200)
         
     } catch(error: any){
         return c.json({error: error?.message}, 400)

@@ -26,3 +26,13 @@ export const createRestaurantService = async (restaurant: TSRestaurant) =>{
     await db.insert(Restaurant).values(restaurant)
     return "Restaurant created successfully";
 }
+
+export const updateRestaurantService = async (id: number, restaurant: TIRestaurant) =>{
+    await db.update(Restaurant).set(restaurant).where(eq(Restaurant.id, id))
+    return "Restaurant updated successfully";
+}
+
+export const deleteRestaurantService = async (id: number) =>{
+    await db.delete(Restaurant).where(eq(Restaurant.id, id))
+    return "Restaurant deleted successfully";
+}
