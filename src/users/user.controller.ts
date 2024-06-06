@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import {userService,getUserService,createUserService,updateUserService} from './user.service';
+import {userService,getUserService,createUserService,updateUserService, deleteUserService} from './user.service';
 import { TIUser, Users } from "../drizzle/schema";
 import db from "../drizzle/db";
 import {eq} from 'drizzle-orm';
@@ -68,6 +68,27 @@ export const updateUser = async (c: Context) =>{
         if(!res) return c.text("User not updated", 404);
 
         return c.json({msg: res}, 201);
+    } catch(error: any){
+        return c.json({error: error?.message}, 400)
+    }
+}
+
+export const deleteUser = async (c: Context) =>{
+    const id = Number(c.req.param("id"));
+    if(isNaN(id)) return c.text("Invalid ID", 400);
+
+    try{
+        //search user
+        const searchUser = await  getUserService(id);
+        if(searchUser == undefined){
+            return c.text("User not found", 404);
+        }
+        //delete user
+        const res = await deleteUserService(id);
+        if(!res) return c.text("User not deleted", 404);
+
+        return c.json({msg: res}, 201);
+
     } catch(error: any){
         return c.json({error: error?.message}, 400)
     }
