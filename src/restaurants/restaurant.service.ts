@@ -11,3 +11,12 @@ export const getRestaurantService = async (limit?: number): Promise<TSRestaurant
     }
   return await db.query.Restaurant.findMany();
 };
+
+
+//get a single restaurant
+export const getSingleRestaurantService = async (id: number): Promise<TSRestaurant | null> => {
+    const restaurant =  await db.query.Restaurant.findFirst({
+       where: eq(Restaurant.id, id)
+    });
+    return restaurant ?? null;
+};
