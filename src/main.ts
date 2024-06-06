@@ -6,6 +6,7 @@ import { HTTPException } from 'hono/http-exception';
 
 //Routes imports
 import { userRouter } from './users/user.router';
+import { cityRouter } from './city/city.route';
 
 
 const app = new Hono().basePath("/api")
@@ -32,6 +33,7 @@ const custonTimeoutException = () =>
 
     //custom routes 
     app.route("/", userRouter)
+    app.route("/", cityRouter)
 
 
     serve({
