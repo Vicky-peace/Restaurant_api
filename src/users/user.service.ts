@@ -21,3 +21,8 @@ export const createUserService = async (user: TIUser) => {
     await db.insert(Users).values(user)
     return "User created successfully";
 }
+
+export const updateUserService = async (id: number, user: TIUser) => {
+  await db.update(Users).set(user).where(eq(Users.id, id))
+  return "User updated successfully";
+}
