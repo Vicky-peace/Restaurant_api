@@ -1,8 +1,9 @@
 import { Hono } from "hono";
-import { listCities } from "./city.controller"; 
+import { listCities,getCityById } from "./city.controller"; 
 
 
 export const cityRouter = new Hono();
 
 //get all cities
 cityRouter.get("/cities", listCities);
+cityRouter.get("/cities/:id", getCityById);

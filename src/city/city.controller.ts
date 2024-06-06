@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { cityService } from "./city.service";
+import { cityService,getCityByIdService } from "./city.service";
 
 export const listCities = async (c: Context) =>{
     try{
@@ -13,4 +13,16 @@ export const listCities = async (c: Context) =>{
     } catch(error: any){
         return c.json({error: error?.message}, 400)
     }
+}
+
+
+export const getCityById = async (c: Context) =>{
+    const id = parseInt(c.req.param("id"));
+    if(isNaN(id)) return c.text("Invalid ID", 400);
+
+    const city = await getCityByIdService(id);
+    if(city == undefined){
+        return c.text("City not found", 404);
+    }
+    return c.json(city, 200);
 }
