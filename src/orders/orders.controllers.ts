@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { OrdersService } from "./orders.service";
+import { OrdersService, getOrderService } from "./orders.service";
 
 export const listAllOrders= async (c: Context) => {
     try{
@@ -14,4 +14,21 @@ export const listAllOrders= async (c: Context) => {
     return c.text(error.message, 400)
     console.log(error)
 }
+}
+
+
+export const getOrder = async (c: Context) => {
+    try{
+        const id = parseInt(c.req.param('id'));
+        if(isNaN(id)){
+            return c.text("Invalid id", 400)
+        }
+        const order = await getOrderService(id);
+        if(order == undefined){
+            return c.text("Order not found", 404)
+        }
+        return c.json(order, 200)
+    } catch (error: any) {
+        return c.text(error.message, 400);
+    }
 }
