@@ -33,3 +33,11 @@ export const orderSchema = z.object({
   created_at: z.date().default(new Date()).optional(),
   updated_at: z.date().default(new Date()).optional()
 });
+
+
+export const orderStatusSchema = z.object({
+  id: z.number().int().optional(),
+  order_id: z.number().int(),
+  status_catalog_id: z.number().int(),
+  created_at: z.date().default(new Date()).optional(),
+});
