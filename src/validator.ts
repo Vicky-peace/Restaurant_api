@@ -41,3 +41,8 @@ export const orderStatusSchema = z.object({
   status_catalog_id: z.number().int(),
   created_at: z.date().default(new Date()).optional(),
 });
+export const restaurantOwnerSchema = z.object({
+  id: z.number().int().optional(),
+  restaurant_id: z.number().int(),
+  owner_id: z.number().int()
+});
