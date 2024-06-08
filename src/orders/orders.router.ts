@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { listAllOrders,getOrder, createOrder } from "./orders.controllers";
+import { listAllOrders,getOrder, createOrder,updateOrder,deleteOrder } from "./orders.controllers";
 import { orderSchema } from "../validator";
 import { zValidator } from "@hono/zod-validator";
 
@@ -12,3 +12,6 @@ ordersRouter.post('/orders', zValidator('json', orderSchema, (result,c) =>{
         return c.json(result.error, 400)
     }
 }), createOrder)
+
+ordersRouter.put('/orders/:id', updateOrder)
+ordersRouter.delete('/orders/:id', deleteOrder)

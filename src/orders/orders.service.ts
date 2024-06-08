@@ -27,3 +27,17 @@ export const createOrderService = async (data: TIOrder)=> {
    await db.insert(Orders).values(data)
     return "Order created successfully"
 }
+
+
+//update an order
+
+export const updateOrderService = async (id: number, data: TIOrder) => {
+    await db.update(Orders).set(data).where(eq(Orders.id, id))
+    return "Order updated successfully"
+}
+
+//delete an order
+export const deleteOrderService = async (id: number) => {
+    await db.delete(Orders).where(eq(Orders.id, id))
+    return "Order deleted successfully"
+}
