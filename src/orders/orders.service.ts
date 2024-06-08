@@ -20,3 +20,10 @@ export const getOrderService = async (id: number): Promise<TSOrder | undefined> 
         where: eq(Orders.id, id)
     })
 }
+
+
+//create a new order
+export const createOrderService = async (data: TIOrder)=> {
+   await db.insert(Orders).values(data)
+    return "Order created successfully"
+}

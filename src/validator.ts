@@ -25,7 +25,7 @@ export const orderSchema = z.object({
   actual_delivery_time: z.date().optional(),
   delivery_address_id: z.number().int(),
   user_id: z.number().int(),
-  driver_id: z.number().int(),
+  driver_id: z.number().int().optional(),
   price: z.number().positive(),
   discount: z.number().positive().optional().nullable(),
   final_price: z.number().positive(),

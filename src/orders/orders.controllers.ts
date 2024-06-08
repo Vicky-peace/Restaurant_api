@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { OrdersService, getOrderService } from "./orders.service";
+import { OrdersService, getOrderService,createOrderService } from "./orders.service";
 
 export const listAllOrders= async (c: Context) => {
     try{
@@ -30,5 +30,17 @@ export const getOrder = async (c: Context) => {
         return c.json(order, 200)
     } catch (error: any) {
         return c.text(error.message, 400);
+    }
+}
+
+export const createOrder = async (c: Context) => {
+    try{
+        const data = await c.req.json();
+        const order = await createOrderService(data);
+        
+        if(!order) return c.text("Order not created", 400)
+        return c.text(order, 201)
+    } catch (error: any) {
+        return c.text(error.message, 400)
     }
 }
