@@ -17,3 +17,19 @@ export const userSchema = z.object({
 // export const validateUser = (data: any) => {
 //   return userSchema.parse(data);
 // };
+
+export const orderSchema = z.object({
+  id: z.number().int().optional(),
+  restaurant_id: z.number().int(),
+  estimated_delivery_time: z.date().optional(),
+  actual_delivery_time: z.date().optional(),
+  delivery_address_id: z.number().int(),
+  user_id: z.number().int(),
+  driver_id: z.number().int(),
+  price: z.number().positive(),
+  discount: z.number().positive().optional().nullable(),
+  final_price: z.number().positive(),
+  comment: z.string().optional().nullable(),
+  created_at: z.date().default(new Date()).optional(),
+  updated_at: z.date().default(new Date()).optional()
+});
