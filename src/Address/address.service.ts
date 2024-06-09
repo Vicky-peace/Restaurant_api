@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import { Address, TSAddress, TIAddress } from "../drizzle/schema";
 
 export const getAddressesService = async (limit?: number): Promise<TSAddress[]> => {

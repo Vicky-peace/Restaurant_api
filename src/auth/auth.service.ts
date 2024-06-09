@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
-import  db from "../drizzle/db";
+import  {db} from "../drizzle/db";
 import { Users,TSUser, TIUser } from '../drizzle/schema';
 import {eq} from 'drizzle-orm';
 

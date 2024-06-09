@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import { OrderMenuItem, TSOrderMenuItem, TIOrderMenuItem } from "../drizzle/schema";
 
 export const getOrderMenuItemsService = async (limit?: number): Promise<TSOrderMenuItem[]> => {

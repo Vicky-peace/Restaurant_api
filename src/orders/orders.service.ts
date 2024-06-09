@@ -1,6 +1,6 @@
 import { Context } from "hono";
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import { TSOrder,TIOrder, Orders } from "../drizzle/schema";
 
 //get all orders

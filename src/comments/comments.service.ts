@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import { Comment, TSComment, TIComment } from "../drizzle/schema";
 
 export const getCommentsService = async (limit?: number): Promise<TSComment[]> => {

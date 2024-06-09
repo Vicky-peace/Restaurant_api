@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import { Driver, TSDriver, TIDriver } from "../drizzle/schema";
 
 export const getDriversService = async (limit?: number): Promise<TSDriver[]> => {

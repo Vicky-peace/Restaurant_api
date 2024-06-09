@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import { StatusCatalog, TSStatusCatalog, TIStatusCatalog } from "../drizzle/schema";
 
 export const getStatusCatalogsService = async (limit?: number): Promise<TSStatusCatalog[]> => {

@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import { TSRestaurant,TIRestaurant, Restaurant } from "../drizzle/schema";
 import { Context } from "hono"
 

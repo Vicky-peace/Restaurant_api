@@ -1,7 +1,7 @@
 import { Context } from "hono";
 import {userService,getUserService,updateUserService, deleteUserService} from './user.service';
 import { TIUser, Users } from "../drizzle/schema";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import {eq} from 'drizzle-orm';
 
 export const listUsers = async (c: Context) =>{

@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import db from "../drizzle/db";
+import {db} from "../drizzle/db";
 import { State, TSState, TIState } from "../drizzle/schema";
 
 export const getStatesService = async (limit?: number): Promise<TSState[]> => {
