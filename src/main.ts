@@ -17,6 +17,7 @@ import {driverRouter} from './driver/driver.router';
 import {commentRouter} from './comments/comments.router';
 import {addressRouter} from './Address/address.router';
 import { categoryRouter } from './category/category.router';
+import {statusCatalogRouter} from './statusCatalog/status.router'
 
 const app = new Hono().basePath("/api")
 
@@ -53,6 +54,7 @@ const custonTimeoutException = () =>
     app.route("/", commentRouter)
     app.route("/", addressRouter)
     app.route("/", categoryRouter)
+    app.route("/", statusCatalogRouter)
 
 
     serve({
