@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.stateRouter = void 0;
+const hono_1 = require("hono");
+const state_controller_1 = require("./state.controller");
+exports.stateRouter = new hono_1.Hono();
+exports.stateRouter.get('/states', state_controller_1.listStates);
+exports.stateRouter.get('/states/:id', state_controller_1.getSingleState);
+exports.stateRouter.post('/states', state_controller_1.createState);
+exports.stateRouter.put('/states/:id', state_controller_1.updateState);
+exports.stateRouter.delete('/states/:id', state_controller_1.deleteState);

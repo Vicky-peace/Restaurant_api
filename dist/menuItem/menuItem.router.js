@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.menuItemRouter = void 0;
+const hono_1 = require("hono");
+const menuItem_controller_1 = require("./menuItem.controller");
+exports.menuItemRouter = new hono_1.Hono();
+exports.menuItemRouter.get('/menu-items', menuItem_controller_1.listMenuItems);
+exports.menuItemRouter.get('/menu-items/:id', menuItem_controller_1.getSingleMenuItem);
+exports.menuItemRouter.post('/menu-items', menuItem_controller_1.createMenuItem);
+exports.menuItemRouter.put('/menu-items/:id', menuItem_controller_1.updateMenuItem);
+exports.menuItemRouter.delete('/menu-items/:id', menuItem_controller_1.deleteMenuItem);
