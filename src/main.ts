@@ -19,6 +19,11 @@ import {addressRouter} from './Address/address.router';
 import { categoryRouter } from './category/category.router';
 import {statusCatalogRouter} from './statusCatalog/status.router'
 import {stateRouter } from './state/state.router'
+import { config } from 'dotenv';
+import { authRouter } from './auth/auth.router';
+import { authenticateToken } from './middlewares/auth.middleware';
+
+config(); //Load environmment variables from .env file
 
 const app = new Hono().basePath("/api")
 
@@ -41,6 +46,14 @@ const custonTimeoutException = () =>
         await new Promise((resolve) => setTimeout(resolve, 11000))
         return c.text("data after 5 seconds", 200)
     })
+
+    //Mount the auth router
+    app.route('/', authRouter);
+
+    // Protect other routers with authentication middleware
+app.use('/api/categories', authenticateToken);
+app.use('/api/addresses', authenticateToken);
+app.use('/api/cities', authenticateToken);
 
     //custom routes 
     app.route("/", userRouter)
