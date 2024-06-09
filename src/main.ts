@@ -11,6 +11,7 @@ import {restaurantRouter} from './restaurants/restaurant.router';
 import { ordersRouter } from './orders/orders.router';
 import {orderStatusRouter} from "./order_status/order_status.router";
 import { restaurantOwnerRouter } from './restaurantOwner/restaurantOwner.router';
+import { menuItemRouter } from "./menuItem/menuItem.router";
 
 const app = new Hono().basePath("/api")
 
@@ -41,6 +42,7 @@ const custonTimeoutException = () =>
     app.route("/", ordersRouter)
     app.route("/", orderStatusRouter)
     app.route("/", restaurantOwnerRouter)
+    app.route("/", menuItemRouter)
 
 
     serve({
