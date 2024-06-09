@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import {userService,getUserService,createUserService,updateUserService, deleteUserService} from './user.service';
+import {userService,getUserService,updateUserService, deleteUserService} from './user.service';
 import { TIUser, Users } from "../drizzle/schema";
 import db from "../drizzle/db";
 import {eq} from 'drizzle-orm';
@@ -30,25 +30,25 @@ export const getUser = async (c: Context) =>{
 }
 
 
-export const createUser = async (c: Context) =>{
-    try{
-        const user = await c.req.json();
+// export const createUser = async (c: Context) =>{
+//     try{
+//         const user = await c.req.json();
 
-        //check if the user already exists by email
-        // const existingUser = await db.select(Users).where(Users.email.eq(user.email)).execute();
+//         //check if the user already exists by email
+//         // const existingUser = await db.select(Users).where(Users.email.eq(user.email)).execute();
 
-        // if(existingUser.length > 0){
-        //     return c.text("User already exists", 409);
-        // }
-        const createdUser = await createUserService(user);
+//         // if(existingUser.length > 0){
+//         //     return c.text("User already exists", 409);
+//         // }
+//         const createdUser = await createUserService(user);
         
-        if(!createdUser) return c.text("User not created", 404);
-        return c.json({msg: createdUser}, 201);
+//         if(!createdUser) return c.text("User not created", 404);
+//         return c.json({msg: createdUser}, 201);
 
-    }catch(error: any){
-        return c.json({error: error?.message}, 400)
-    }
-}
+//     }catch(error: any){
+//         return c.json({error: error?.message}, 400)
+//     }
+// }
 
 
 export const updateUser = async (c: Context) =>{
