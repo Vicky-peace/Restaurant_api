@@ -2,10 +2,11 @@ import { Hono } from "hono";
 import { getUser, listUsers, updateUser, deleteUser } from "./user.controller";
 import { zValidator } from "@hono/zod-validator";
 import { userSchema } from "../validator";
+import { adminRoleAuth, userRoleAuth } from "../middlewares/authorizeRole";
 export const userRouter = new Hono();
 
 //get all users
-userRouter.get("/users", listUsers);
+userRouter.get("/users",adminRoleAuth, listUsers);
 
 //get a single user by id
 userRouter.get("/users/:id",getUser)

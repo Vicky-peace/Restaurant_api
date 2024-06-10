@@ -1,25 +1,25 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { db } from '../drizzle/db';
-import { Users, TSUser, AuthOnUsersTable, TSAuthOnUsersTable } from '../drizzle/schema';
+import {  AuthOnUsersTable,Users, TSUser, TIUser} from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
-import { userSchema, authOnUsersSchema, loginSchema } from '../validator'; // Import the Zod schemas
+import {userSchema, authOnUsersSchema, loginSchema } from '../validator'; // Import the Zod schemas
+
+
 
 
 const secret = process.env.SECRET;
 const expiresIn = process.env.EXPIRES;
 
-export const registerUser = async (user: TSUser) => {
+export const registerUser = async (user: any) => {
     // Validate user data against the Users and AuthOnUsersTable schemas
     userSchema.parse(user);
     authOnUsersSchema.parse(user);
 
     // Check if the user already exists
-    const existingUser = await db.query.Users.findFirst({
-        where: eq(Users.email, user.email),
-    });
+    const existingUser = await db.select().from(Users).where(eq(Users.email, user.email)).execute();
 
-    if (existingUser) {
+    if (existingUser.length > 0) {
         throw new Error('User already exists');
     }
 
@@ -27,39 +27,49 @@ export const registerUser = async (user: TSUser) => {
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
     // Insert data into the Users table
-    const [newUser] = await db
+    const newUser = await db
         .insert(Users)
         .values({
             name: user.name,
-            contact_phone: user.contact_phone,
-            phone_verified: user.phone_verified,
+            contact_phone: user.contact_phone || null,
+            phone_verified: user.phone_verified || false,
             email: user.email,
-            email_verified: user.email_verified,
-            confirmation_code: user.confirmation_code,
+            email_verified: user.email_verified || false,
+            confirmation_code: user.confirmation_code || null,
             password: hashedPassword,
         })
         .returning({ id: Users.id })
         .execute();
 
-    // Insert data into the AuthOnUsersTable table
-    await db
-        .insert(AuthOnUsersTable)
-        .values({
-            userId: newUser.id,
-            email: user.email,
-            password: hashedPassword,
-        })
-        .execute();
+    const userId = newUser[0].id;
 
-    return 'User registered successfully';
+    try {
+        // Insert data into the AuthOnUsersTable
+        await db
+            .insert(AuthOnUsersTable)
+            .values({
+                userId: userId, // Make sure this matches the column name in the table definition
+                password: hashedPassword,
+                email: user.email,
+                role: user.role || 'user', // Default role if not provided
+            })
+            .execute();
+
+        return 'User registered successfully';
+    } catch (error) {
+        // Rollback: delete the user from the Users table if the second insert fails
+        await db.delete(Users).where(eq(Users.id, userId)).execute();
+        throw new Error('Registration failed. Please try again.');
+    }
 };
+
 
 export const loginUser = async (email: string, password: string) => {
     // Validate login data against the login schema
     loginSchema.parse({ email, password });
 
     const user = await db.query.Users.findFirst({
-        where: eq(AuthOnUsersTable.email, email),
+        where: eq(Users.email, email),
     });
 
     if (!user) {

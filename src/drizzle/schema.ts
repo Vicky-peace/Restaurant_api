@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
-import {pgEnum, pgTable, serial, varchar, text, integer, decimal, date, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, text, integer, decimal, date, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgEnum } from 'drizzle-orm/pg-core';
 
 // Restaurant Table
 export const Restaurant = pgTable('restaurant', {
@@ -146,7 +147,7 @@ export const Users = pgTable('users', {
 export const RestaurantOwner = pgTable('restaurant_owner', {
     id: serial("id").primaryKey(),
     restaurant_id: integer("restaurant_id").references(() => Restaurant.id, { onDelete: "cascade" }),
-    owner_id: integer("owner_id").references(() => Users.id, { onDelete: "cascade" }),
+    owner_id: integer("owner_id").references(() => Users.id, { onDelete: "cascade" })
 });
 
 
@@ -183,6 +184,18 @@ export const authOnUsersRelations = relations(AuthOnUsersTable, ({ one }) => ({
         fields: [AuthOnUsersTable.userId],
         references: [Users.id]
     })
+}));
+
+export const userRelationship = relations(Users, ({ many }) => ({
+    restaurantOwners: many(RestaurantOwner),
+}));
+
+
+export const userRestaurantOwnerRelations = relations(RestaurantOwner, ({ one }) => ({
+    owner: one(Users, {
+        fields: [RestaurantOwner.owner_id],
+        references: [Users.id]
+    }),
 }));
 
 export const restaurantRelations = relations(Restaurant, ({ many, one }) => ({
@@ -357,5 +370,3 @@ export type TIDriver = typeof Driver.$inferInsert;
 export type TSDriver = typeof Driver.$inferSelect;
 export type TIRestaurantOwner = typeof RestaurantOwner.$inferInsert;
 export type TSRestaurantOwner = typeof RestaurantOwner.$inferSelect;
-export type TIAuthOnUsersTable = typeof AuthOnUsersTable.$inferInsert;
-export type TSAuthOnUsersTable = typeof AuthOnUsersTable.$inferSelect;

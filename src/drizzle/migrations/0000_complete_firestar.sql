@@ -140,7 +140,6 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"email_verified" boolean DEFAULT false,
 	"confirmation_code" varchar(6),
 	"password" varchar(255) NOT NULL,
-	"role" "role" DEFAULT 'user',
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
 );
