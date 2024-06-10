@@ -126,6 +126,8 @@ export const StatusCatalog = pgTable('status_catalog', {
     name: varchar("name", { length: 255 }).notNull(),
 });
 
+export const roleEnum = pgEnum("role", ["user","admin"]);
+
 // Users Table
 export const Users = pgTable('users', {
     id: serial("id").primaryKey(),
@@ -136,6 +138,7 @@ export const Users = pgTable('users', {
     email_verified: boolean("email_verified").default(false),
     confirmation_code: varchar("confirmation_code", { length: 6 }),
     password: varchar("password", { length: 255 }).notNull(),
+    role: roleEnum('role').default("user"), 
     created_at: timestamp("created_at").defaultNow(),
     updated_at: timestamp("updated_at").defaultNow(),
 });
@@ -147,7 +150,7 @@ export const RestaurantOwner = pgTable('restaurant_owner', {
     owner_id: integer("owner_id").references(() => Users.id, { onDelete: "cascade" }),
 });
 
-export const roleEnum = pgEnum("role", ["user","admin"]);
+
 
 export const AuthOnUsersTable = pgTable("auth_on_users", {
     id: serial("id").primaryKey(),

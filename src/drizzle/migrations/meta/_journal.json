@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1717964899674,
-      "tag": "0000_dry_hardball",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1718003417474,
-      "tag": "0001_cute_mimic",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1718004583105,
-      "tag": "0002_aromatic_rage",
+      "when": 1718010226060,
+      "tag": "0000_melted_squadron_supreme",
       "breakpoints": true
     }
   ]

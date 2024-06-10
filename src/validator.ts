@@ -10,7 +10,8 @@ export const userSchema = z.object({
   confirmation_code: z.string().length(6).optional().nullable(),
   password: z.string().max(255),
   created_at: z.date().default(new Date()).optional(),
-  updated_at: z.date().default(new Date()).optional()
+  updated_at: z.date().default(new Date()).optional(),
+  role: z.enum(['user', 'admin'])
 });
 
 // // To use the validator in your controllers
@@ -31,7 +32,8 @@ export const orderSchema = z.object({
   final_price: z.number().positive(),
   comment: z.string().optional().nullable(),
   created_at: z.date().default(new Date()).optional(),
-  updated_at: z.date().default(new Date()).optional()
+  updated_at: z.date().default(new Date()).optional(),
+  
 });
 
 
