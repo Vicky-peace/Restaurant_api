@@ -82,7 +82,18 @@ export const loginUser = async (email: string, password: string) => {
         throw new Error('Invalid credentials! Try again');
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, secret!, { expiresIn });
+
+    // Fetch the user's role from the auth_on_users table
+    const userRole = await db.query.AuthOnUsersTable.findFirst({
+        where: eq(AuthOnUsersTable.userId, user.id),
+    });
+   
+    if (!userRole) {
+        throw new Error('User role not found! Please contact support.');
+    }
+  
+
+    const token = jwt.sign({ id: user.id, email: user.email, role: userRole.role }, secret!, { expiresIn });
 
     return { token, user };
 };

@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 export const verifyToken = async (token: string, secret: string) => {
     try{
-        const decoded = await verify(token as string, secret);
+        const decoded = jwt.verify(token as string, secret!);
         return decoded;
 
     } catch(error: any){
@@ -17,11 +17,15 @@ export const verifyToken = async (token: string, secret: string) => {
 
 
 export const authMiddleware = async (c: Context, next: Next, requiredRole: string) => {
-    const token = c.req.header("Authorization");
+   
+        const headers = c.req.header();
+        console.log('Headers:', headers);
+    const token = c.req.header("token");
+    
 
     if (!token) {
         console.log("No token provided");
-        return c.json({ error: "Unauthorized Invalid token" }, 401);
+        return c.json({ error: 'Unauthorized: No token provided' }, 401);
     }
 
     try {
@@ -32,13 +36,13 @@ export const authMiddleware = async (c: Context, next: Next, requiredRole: strin
             return c.json({ error: "Forbidden" }, 403);
         }
 
-        if (decoded.role !== requiredRole) {
-            console.log(`Role mismatch: required ${requiredRole}, found ${decoded.role}`);
-            return c.json({ error: "Unauthorized" }, 401);
+        if (requiredRole && decoded.role !== requiredRole) {
+            return c.json({ error: 'Forbidden: Insufficient privileges' }, 403);
         }
 
         console.log("Token and role verified successfully");
-        return next();
+        c.set('user', decoded);
+        await next();
     } catch (error) {
         console.log("Error verifying token:", error);
         return c.json({ error: "Unauthorized Invalid token" }, 401);
