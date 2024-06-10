@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, serial, varchar, text, integer, decimal, date, timestamp, boolean } from "drizzle-orm/pg-core";
+import {pgEnum, pgTable, serial, varchar, text, integer, decimal, date, timestamp, boolean } from "drizzle-orm/pg-core";
 
 // Restaurant Table
 export const Restaurant = pgTable('restaurant', {
@@ -147,7 +147,41 @@ export const RestaurantOwner = pgTable('restaurant_owner', {
     owner_id: integer("owner_id").references(() => Users.id, { onDelete: "cascade" }),
 });
 
+export const roleEnum = pgEnum("role", ["user","admin"]);
+
+export const AuthOnUsersTable = pgTable("auth_on_users", {
+    id: serial("id").primaryKey(),
+    userId: integer("user_id").references(() => Users.id, { onDelete: "cascade" }),
+    password: varchar("password", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    role: roleEnum("role").default("user"),
+})
+
+
+export const WebhookSubscription = pgTable('webhook_subscription', {
+    id: serial("id").primaryKey(),
+    url: text("url").notNull(),
+    event: varchar("event", { length: 255 }).notNull(),
+    createdAt: timestamp("createdAt").defaultNow(),
+    updatedAt: timestamp("updatedAt").defaultNow(),
+});
+
 ///////////////////////////////Relationships///////////////////////////////////////////
+
+
+export const userAuthRelations = relations(Users, ({ one }) => ({
+    auth: one(AuthOnUsersTable, {
+        fields: [Users.id],
+        references: [AuthOnUsersTable.userId]
+    })
+}));
+
+export const authOnUsersRelations = relations(AuthOnUsersTable, ({ one }) => ({
+    user: one(Users, {
+        fields: [AuthOnUsersTable.userId],
+        references: [Users.id]
+    })
+}));
 
 export const restaurantRelations = relations(Restaurant, ({ many, one }) => ({
     menuItems: many(MenuItem),
@@ -321,3 +355,5 @@ export type TIDriver = typeof Driver.$inferInsert;
 export type TSDriver = typeof Driver.$inferSelect;
 export type TIRestaurantOwner = typeof RestaurantOwner.$inferInsert;
 export type TSRestaurantOwner = typeof RestaurantOwner.$inferSelect;
+export type TIAuthOnUsersTable = typeof AuthOnUsersTable.$inferInsert;
+export type TSAuthOnUsersTable = typeof AuthOnUsersTable.$inferSelect;

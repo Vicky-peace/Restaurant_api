@@ -46,3 +46,18 @@ export const restaurantOwnerSchema = z.object({
   restaurant_id: z.number().int(),
   owner_id: z.number().int()
 });
+
+// AuthOnUsersTable schema
+export const authOnUsersSchema = z.object({
+  id: z.number().int().optional(),
+  userId: z.number().int().optional(),
+  password: z.string().max(255),
+  email: z.string().email().max(255),
+  role: z.enum(['user', 'admin']).optional(),
+});
+
+
+export const loginSchema = z.object({
+  email: z.string().email().max(255),
+  password: z.string().max(255),
+});
