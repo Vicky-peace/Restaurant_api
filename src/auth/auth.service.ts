@@ -37,7 +37,6 @@ export const registerUser = async (user: TSUser) => {
             email_verified: user.email_verified,
             confirmation_code: user.confirmation_code,
             password: hashedPassword,
-            role: user.role,
         })
         .returning({ id: Users.id })
         .execute();
@@ -49,7 +48,6 @@ export const registerUser = async (user: TSUser) => {
             userId: newUser.id,
             email: user.email,
             password: hashedPassword,
-            role: user.role,
         })
         .execute();
 

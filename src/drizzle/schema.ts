@@ -138,7 +138,6 @@ export const Users = pgTable('users', {
     email_verified: boolean("email_verified").default(false),
     confirmation_code: varchar("confirmation_code", { length: 6 }),
     password: varchar("password", { length: 255 }).notNull(),
-    role: roleEnum('role').default("user"), 
     created_at: timestamp("created_at").defaultNow(),
     updated_at: timestamp("updated_at").defaultNow(),
 });

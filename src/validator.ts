@@ -11,7 +11,6 @@ export const userSchema = z.object({
   password: z.string().max(255),
   created_at: z.date().default(new Date()).optional(),
   updated_at: z.date().default(new Date()).optional(),
-  role: z.enum(['user', 'admin'])
 });
 
 // // To use the validator in your controllers
