@@ -24,4 +24,4 @@ userRouter.get("/users/:id",adminRoleAuth,getUser)
 userRouter.put("/users/:id", updateUser);
 
 //delete a user
-userRouter.delete("/users/:id", deleteUser);
+userRouter.delete("/users/:id",adminRoleAuth, deleteUser);
