@@ -2,6 +2,7 @@ import {Hono} from 'hono';
 import "dotenv/config";
 import { serve } from '@hono/node-server'
 import { HTTPException } from 'hono/http-exception';
+import rateLimit from 'express-rate-limit';
 
 
 //Routes imports
@@ -27,8 +28,24 @@ config(); //Load environmment variables from .env file
 
 const app = new Hono().basePath("/api")
 
-//middlewares
+// Apply rate limiting middleware
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests, please try again later.'
+});
 
+
+
+    //middlewares
+    app.use('/api/', limiter);
+
+
+
+    // Protect other routers with authentication middleware
+    app.use('/api/categories', authenticateToken);
+    app.use('/api/addresses', authenticateToken);
+    app.use('/api/cities', authenticateToken);
 
 
 const custonTimeoutException = () => 
@@ -50,10 +67,6 @@ const custonTimeoutException = () =>
     //Mount the auth router
     app.route('/', authRouter);
 
-    // Protect other routers with authentication middleware
-app.use('/api/categories', authenticateToken);
-app.use('/api/addresses', authenticateToken);
-app.use('/api/cities', authenticateToken);
 
     //custom routes 
     app.route("/", userRouter)
