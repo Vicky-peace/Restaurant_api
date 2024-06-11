@@ -1,4 +1,4 @@
-# Hono RESTful API with Drizzle ORM and PostgreSQL
+# Restaurant RESTful API with Drizzle ORM and PostgreSQL
 
 This project is a RESTful API built with the Hono framework, using Drizzle ORM for database interactions and PostgreSQL as the database.
 
