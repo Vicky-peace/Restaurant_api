@@ -22,7 +22,6 @@ import {statusCatalogRouter} from './statusCatalog/status.router'
 import {stateRouter } from './state/state.router'
 import { config } from 'dotenv';
 import { authRouter } from './auth/auth.router';
-import { authenticateToken } from './middlewares/auth.middleware';
 
 config(); //Load environmment variables from .env file
 
@@ -43,9 +42,7 @@ const limiter = rateLimit({
 
 
     // Protect other routers with authentication middleware
-    app.use('/api/categories', authenticateToken);
-    app.use('/api/addresses', authenticateToken);
-    app.use('/api/cities', authenticateToken);
+
 
 
 const custonTimeoutException = () => 
