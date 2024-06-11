@@ -1,9 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const hono_1 = require("hono");
 require("dotenv/config");
 const node_server_1 = require("@hono/node-server");
 const http_exception_1 = require("hono/http-exception");
+const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 //Routes imports
 const user_router_1 = require("./users/user.router");
 const city_route_1 = require("./city/city.route");
@@ -24,7 +28,18 @@ const auth_router_1 = require("./auth/auth.router");
 const auth_middleware_1 = require("./middlewares/auth.middleware");
 (0, dotenv_1.config)(); //Load environmment variables from .env file
 const app = new hono_1.Hono().basePath("/api");
+// Apply rate limiting middleware
+const limiter = (0, express_rate_limit_1.default)({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests, please try again later.'
+});
 //middlewares
+app.use('/api/', limiter);
+// Protect other routers with authentication middleware
+app.use('/api/categories', auth_middleware_1.authenticateToken);
+app.use('/api/addresses', auth_middleware_1.authenticateToken);
+app.use('/api/cities', auth_middleware_1.authenticateToken);
 const custonTimeoutException = () => new http_exception_1.HTTPException(408, {
     message: `Request timeout after waiting for more than 10 seconds`
 });
@@ -38,10 +53,6 @@ app.get('/timeout', async (c) => {
 });
 //Mount the auth router
 app.route('/', auth_router_1.authRouter);
-// Protect other routers with authentication middleware
-app.use('/api/categories', auth_middleware_1.authenticateToken);
-app.use('/api/addresses', auth_middleware_1.authenticateToken);
-app.use('/api/cities', auth_middleware_1.authenticateToken);
 //custom routes 
 app.route("/", user_router_1.userRouter);
 app.route("/", city_route_1.cityRouter);

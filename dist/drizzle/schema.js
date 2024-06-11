@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRelations = exports.statusCatalogRelations = exports.stateRelations = exports.restaurantOwnerRelations = exports.orderRelations = exports.orderStatusRelations = exports.orderMenuItemRelations = exports.menuItemRelations = exports.driverRelations = exports.commentRelations = exports.categoryRelations = exports.cityRelations = exports.citiesRelations = exports.addressRelations = exports.restaurantRelations = exports.RestaurantOwner = exports.Users = exports.StatusCatalog = exports.State = exports.Orders = exports.OrderStatus = exports.OrderMenuItem = exports.MenuItem = exports.Driver = exports.Comment = exports.City = exports.Category = exports.Address = exports.Restaurant = void 0;
+exports.userRelations = exports.statusCatalogRelations = exports.stateRelations = exports.restaurantOwnerRelations = exports.orderRelations = exports.orderStatusRelations = exports.orderMenuItemRelations = exports.menuItemRelations = exports.driverRelations = exports.commentRelations = exports.categoryRelations = exports.cityRelations = exports.citiesRelations = exports.addressRelations = exports.restaurantRelations = exports.userRestaurantOwnerRelations = exports.userRelationship = exports.authOnUsersRelations = exports.userAuthRelations = exports.WebhookSubscription = exports.AuthOnUsersTable = exports.RestaurantOwner = exports.Users = exports.roleEnum = exports.StatusCatalog = exports.State = exports.Orders = exports.OrderStatus = exports.OrderMenuItem = exports.MenuItem = exports.Driver = exports.Comment = exports.City = exports.Category = exports.Address = exports.Restaurant = void 0;
 const drizzle_orm_1 = require("drizzle-orm");
 const pg_core_1 = require("drizzle-orm/pg-core");
+const pg_core_2 = require("drizzle-orm/pg-core");
 // Restaurant Table
 exports.Restaurant = (0, pg_core_1.pgTable)('restaurant', {
     id: (0, pg_core_1.serial)("id").primaryKey(),
@@ -116,6 +117,7 @@ exports.StatusCatalog = (0, pg_core_1.pgTable)('status_catalog', {
     id: (0, pg_core_1.serial)("id").primaryKey(),
     name: (0, pg_core_1.varchar)("name", { length: 255 }).notNull(),
 });
+exports.roleEnum = (0, pg_core_2.pgEnum)("role", ["user", "admin"]);
 // Users Table
 exports.Users = (0, pg_core_1.pgTable)('users', {
     id: (0, pg_core_1.serial)("id").primaryKey(),
@@ -133,9 +135,44 @@ exports.Users = (0, pg_core_1.pgTable)('users', {
 exports.RestaurantOwner = (0, pg_core_1.pgTable)('restaurant_owner', {
     id: (0, pg_core_1.serial)("id").primaryKey(),
     restaurant_id: (0, pg_core_1.integer)("restaurant_id").references(() => exports.Restaurant.id, { onDelete: "cascade" }),
-    owner_id: (0, pg_core_1.integer)("owner_id").references(() => exports.Users.id, { onDelete: "cascade" }),
+    owner_id: (0, pg_core_1.integer)("owner_id").references(() => exports.Users.id, { onDelete: "cascade" })
+});
+exports.AuthOnUsersTable = (0, pg_core_1.pgTable)("auth_on_users", {
+    id: (0, pg_core_1.serial)("id").primaryKey(),
+    userId: (0, pg_core_1.integer)("user_id").references(() => exports.Users.id, { onDelete: "cascade" }),
+    password: (0, pg_core_1.varchar)("password", { length: 255 }).notNull(),
+    email: (0, pg_core_1.varchar)("email", { length: 255 }).notNull(),
+    role: (0, exports.roleEnum)("role").default("user"),
+});
+exports.WebhookSubscription = (0, pg_core_1.pgTable)('webhook_subscription', {
+    id: (0, pg_core_1.serial)("id").primaryKey(),
+    url: (0, pg_core_1.text)("url").notNull(),
+    event: (0, pg_core_1.varchar)("event", { length: 255 }).notNull(),
+    createdAt: (0, pg_core_1.timestamp)("createdAt").defaultNow(),
+    updatedAt: (0, pg_core_1.timestamp)("updatedAt").defaultNow(),
 });
 ///////////////////////////////Relationships///////////////////////////////////////////
+exports.userAuthRelations = (0, drizzle_orm_1.relations)(exports.Users, ({ one }) => ({
+    auth: one(exports.AuthOnUsersTable, {
+        fields: [exports.Users.id],
+        references: [exports.AuthOnUsersTable.userId]
+    })
+}));
+exports.authOnUsersRelations = (0, drizzle_orm_1.relations)(exports.AuthOnUsersTable, ({ one }) => ({
+    user: one(exports.Users, {
+        fields: [exports.AuthOnUsersTable.userId],
+        references: [exports.Users.id]
+    })
+}));
+exports.userRelationship = (0, drizzle_orm_1.relations)(exports.Users, ({ many }) => ({
+    restaurantOwners: many(exports.RestaurantOwner),
+}));
+exports.userRestaurantOwnerRelations = (0, drizzle_orm_1.relations)(exports.RestaurantOwner, ({ one }) => ({
+    owner: one(exports.Users, {
+        fields: [exports.RestaurantOwner.owner_id],
+        references: [exports.Users.id]
+    }),
+}));
 exports.restaurantRelations = (0, drizzle_orm_1.relations)(exports.Restaurant, ({ many, one }) => ({
     menuItems: many(exports.MenuItem),
     orders: many(exports.Orders),

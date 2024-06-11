@@ -1,5 +1,5 @@
 import "dotenv/config";
-import db from "./db";
+import {db} from "./db";
 import { Restaurant, Address, Category, City, Comment, Driver, MenuItem, OrderMenuItem, OrderStatus, Orders, State, StatusCatalog, Users, RestaurantOwner } from "./schema";
 import { TIUser, TSUser, TIAddress, TSAddress, TICity, TSCity, TIState, TSState, TIRestaurant, TSRestaurant, TICategory, TSCategory, TIMenuItem, TSMenuItem, TIOrder, TSOrder, TIOrderMenuItem, TSOrderMenuItem, TIOrderStatus, TSOrderStatus, TSStatusCatalog, TIStatusCatalog, TIComment, TSComment, TIDriver, TIRestaurantOwner, TSRestaurantOwner } from "./schema";
 

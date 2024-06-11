@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.restaurantOwnerSchema = exports.orderStatusSchema = exports.orderSchema = exports.userSchema = void 0;
+exports.loginSchema = exports.authOnUsersSchema = exports.restaurantOwnerSchema = exports.orderStatusSchema = exports.orderSchema = exports.userSchema = void 0;
 const zod_1 = require("zod");
 exports.userSchema = zod_1.z.object({
     id: zod_1.z.number().int().optional(),
@@ -12,7 +12,7 @@ exports.userSchema = zod_1.z.object({
     confirmation_code: zod_1.z.string().length(6).optional().nullable(),
     password: zod_1.z.string().max(255),
     created_at: zod_1.z.date().default(new Date()).optional(),
-    updated_at: zod_1.z.date().default(new Date()).optional()
+    updated_at: zod_1.z.date().default(new Date()).optional(),
 });
 // // To use the validator in your controllers
 // export const validateUser = (data: any) => {
@@ -31,7 +31,7 @@ exports.orderSchema = zod_1.z.object({
     final_price: zod_1.z.number().positive(),
     comment: zod_1.z.string().optional().nullable(),
     created_at: zod_1.z.date().default(new Date()).optional(),
-    updated_at: zod_1.z.date().default(new Date()).optional()
+    updated_at: zod_1.z.date().default(new Date()).optional(),
 });
 exports.orderStatusSchema = zod_1.z.object({
     id: zod_1.z.number().int().optional(),
@@ -43,4 +43,16 @@ exports.restaurantOwnerSchema = zod_1.z.object({
     id: zod_1.z.number().int().optional(),
     restaurant_id: zod_1.z.number().int(),
     owner_id: zod_1.z.number().int()
+});
+// AuthOnUsersTable schema
+exports.authOnUsersSchema = zod_1.z.object({
+    id: zod_1.z.number().int().optional(),
+    userId: zod_1.z.number().int().optional(),
+    password: zod_1.z.string().max(255),
+    email: zod_1.z.string().email().max(255),
+    role: zod_1.z.enum(['user', 'admin']).optional(),
+});
+exports.loginSchema = zod_1.z.object({
+    email: zod_1.z.string().email().max(255),
+    password: zod_1.z.string().max(255),
 });

@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { getUser, listUsers, updateUser, deleteUser } from "./user.controller";
-import { zValidator } from "@hono/zod-validator";
 import { userSchema } from "../validator";
 import { adminRoleAuth, userRoleAuth } from "../middlewares/authorizeRole";
 export const userRouter = new Hono();
