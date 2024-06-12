@@ -5,10 +5,10 @@ import { adminRoleAuth, userRoleAuth } from "../middlewares/authorizeRole";
 export const userRouter = new Hono();
 
 //get all users
-userRouter.get("/users",adminRoleAuth, listUsers);
+userRouter.get("/users", listUsers);
 
 //get a single user by id
-userRouter.get("/users/:id",adminRoleAuth,getUser)
+userRouter.get("/users/:id",getUser)
 
 
 //create a user
@@ -23,4 +23,4 @@ userRouter.get("/users/:id",adminRoleAuth,getUser)
 userRouter.put("/users/:id", updateUser);
 
 //delete a user
-userRouter.delete("/users/:id",adminRoleAuth, deleteUser);
+userRouter.delete("/users/:id", deleteUser);

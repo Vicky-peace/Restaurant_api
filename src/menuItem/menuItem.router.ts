@@ -6,6 +6,6 @@ export const menuItemRouter = new Hono();
 
 menuItemRouter.get('/menu-items', listMenuItems);
 menuItemRouter.get('/menu-items/:id', getSingleMenuItem);
-menuItemRouter.post('/menu-items',adminRoleAuth, createMenuItem);
-menuItemRouter.put('/menu-items/:id',adminRoleAuth, updateMenuItem);
-menuItemRouter.delete('/menu-items/:id',adminRoleAuth, deleteMenuItem);
+menuItemRouter.post('/menu-items', createMenuItem);
+menuItemRouter.put('/menu-items/:id', updateMenuItem);
+menuItemRouter.delete('/menu-items/:id', deleteMenuItem);

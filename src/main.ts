@@ -22,7 +22,10 @@ import {statusCatalogRouter} from './statusCatalog/status.router'
 import {stateRouter } from './state/state.router'
 import { config } from 'dotenv';
 import { authRouter } from './auth/auth.router';
-
+import {restaurantLocationRouter} from './CityStateDetails/cityState.router';
+import {restaurantMenuRouter} from  './ActiveMenuItems/activeMenuItems.router';
+import {userOrderRoute} from './userOrderWithDetails/userOrder.route';
+import {driversOn} from './driverCurentlyOnline/driversOn.router';
 config(); //Load environmment variables from .env file
 
 const app = new Hono().basePath("/api")
@@ -80,6 +83,10 @@ const custonTimeoutException = () =>
     app.route("/", categoryRouter)
     app.route("/", statusCatalogRouter)
     app.route("/", stateRouter )
+    app.route("/", restaurantLocationRouter)
+    app.route("/", restaurantMenuRouter)
+    app.route("/", userOrderRoute)
+    app.route("/", driversOn)
 
 
     serve({
