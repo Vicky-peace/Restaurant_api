@@ -16,7 +16,7 @@ export const verifyToken = async (token: string, secret: string) => {
 
 
 
-export const authMiddleware = async (c: Context, next: Next, requiredRole: string[]) => {
+export const authMiddleware = async (c: Context, next: Next, requiredRole: string) => {
    
         const headers = c.req.header();
         console.log('Headers:', headers);
@@ -49,6 +49,6 @@ export const authMiddleware = async (c: Context, next: Next, requiredRole: strin
     }
 };
 
-export const adminRoleAuth = async (c: Context, next: Next) =>  await authMiddleware(c, next, ["admin"]);
-export const userRoleAuth = async (c: Context, next: Next) =>  await authMiddleware(c, next, ["user"]);
-export const adminOrUserAuth = async (c: Context, next: Next) => await authMiddleware(c, next, ["admin", "user"]);
+export const adminRoleAuth = async (c: Context, next: Next) =>  await authMiddleware(c, next, "admin");
+export const userRoleAuth = async (c: Context, next: Next) =>  await authMiddleware(c, next, "user");
+export const adminOrUserAuth = async (c: Context, next: Next) => await authMiddleware(c, next, "admin" || "user");
