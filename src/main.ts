@@ -101,16 +101,7 @@ const custonTimeoutException = () =>
             `
         );
     });
-    //default route
-    app.get('/ok', (c) =>{
-      return c.text('The server is running')
-    })
-
-    app.get('/timeout', async (c) => {
-        await new Promise((resolve) => setTimeout(resolve, 11000))
-        return c.text("data after 5 seconds", 200)
-    })
-
+   
     //Mount the auth router
     app.route('/', authRouter);
 
