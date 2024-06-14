@@ -30,7 +30,7 @@ import {driversOn} from './driverCurentlyOnline/driversOn.router';
 import { orderServiceRoute } from './orderSevices/orderRouter';
 config(); //Load environmment variables from .env file
 
-const app = new Hono().basePath("/api")
+const app = new Hono();
 
 // Apply rate limiting middleware
 const limiter = rateLimit({
