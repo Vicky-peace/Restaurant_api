@@ -7,7 +7,7 @@ import { TSOrder,TIOrder, Orders } from "../drizzle/schema";
 export const OrdersService = async (limit: number): Promise<TSOrder[] | null> => {
     if(limit){
         return await db.query.Orders.findMany({
-            limit: limit
+            
         })
     }
     return await db.query.Orders.findMany();
@@ -40,4 +40,42 @@ export const updateOrderService = async (id: number, data: TIOrder) => {
 export const deleteOrderService = async (id: number) => {
     await db.delete(Orders).where(eq(Orders.id, id))
     return "Order deleted successfully"
+}
+
+
+export const getDetailedOrderInfo = async () => {
+    return await db.query.Orders.findMany({
+        columns:{
+            created_at: true,
+            estimated_delivery_time: true,
+            actual_delivery_time: true,
+            price: true,
+            discount: true,
+            final_price: true,
+            comment: true,
+        },
+        with:{
+            user:{
+                columns:{
+                    name: true,
+                    contact_phone: true,
+                    email: true,
+                }
+            },
+            restaurant:{
+                columns:{
+                    name: true,
+                    street_address: true,
+                    zip_code: true,
+                }
+            },
+            driver:{
+                columns:{
+                    car_make: true,
+                    car_model: true,
+                    car_year: true,
+                }
+            }
+        }
+    })
 }

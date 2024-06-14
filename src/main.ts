@@ -2,6 +2,7 @@ import {Hono} from 'hono';
 import "dotenv/config";
 import { serve } from '@hono/node-server'
 import { HTTPException } from 'hono/http-exception';
+import { html, raw } from 'hono/html'
 import rateLimit from 'express-rate-limit';
 
 
@@ -26,6 +27,7 @@ import {restaurantLocationRouter} from './CityStateDetails/cityState.router';
 import {restaurantMenuRouter} from  './ActiveMenuItems/activeMenuItems.router';
 import {userOrderRoute} from './userOrderWithDetails/userOrder.route';
 import {driversOn} from './driverCurentlyOnline/driversOn.router';
+import { orderServiceRoute } from './orderSevices/orderRouter';
 config(); //Load environmment variables from .env file
 
 const app = new Hono().basePath("/api")
@@ -52,8 +54,53 @@ const custonTimeoutException = () =>
     new HTTPException(408, {
         message:`Request timeout after waiting for more than 10 seconds`
     });
-
-
+    app.get('/', (c) => {
+        return c.html(
+            html`
+            <style>
+                body, html {
+                    height: 100%;
+                    margin: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-family: Arial, sans-serif;
+                }
+                .container {
+                    text-align: center;
+                    border: 1px solid #ddd;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                ul {
+                    list-style-type: none;
+                    padding: 0;
+                }
+                li {
+                    margin-bottom: 10px;
+                }
+                a {
+                    color: #007BFF;
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+            </style>
+            <div class="container">
+                <h1>Welcome to the Restaurant Food Delivery API</h1>
+                <ul>
+                    <li><b>Message:</b> Welcome to my Restaurant API</li>
+                    <li><b>Author:</b> Victor Peace Kipkorir</li>
+                    <li><b>Version:</b> 1.0</li>
+                    <li><b>Description:</b> This is a simple API for a restaurant food delivery system</li>
+                    <li><b>GitHub:</b> <a href="https://github.com/Vicky-peace/Restaurant_api">Github link</a></li>
+                </ul>
+            </div>
+            `
+        );
+    });
     //default route
     app.get('ok', (c) =>{
       return c.text('The server is running😀')
@@ -87,6 +134,7 @@ const custonTimeoutException = () =>
     app.route("/", restaurantMenuRouter)
     app.route("/", userOrderRoute)
     app.route("/", driversOn)
+    app.route('/', orderServiceRoute)
 
 
     serve({

@@ -1,11 +1,12 @@
 import { Hono } from "hono";
-import { listAllOrders,getOrder, createOrder,updateOrder,deleteOrder } from "./orders.controllers";
+import { listAllOrders,getOrder, createOrder,updateOrder,deleteOrder,getDetailedOrderInfoController } from "./orders.controllers";
 import { orderSchema } from "../validator";
 import { zValidator } from "@hono/zod-validator";
 
 export const ordersRouter = new Hono();
 
 ordersRouter.get("/orders", listAllOrders);
+ordersRouter.get("/orders/details", getDetailedOrderInfoController);
 ordersRouter.get("/orders/:id", getOrder);
 ordersRouter.post('/orders', zValidator('json', orderSchema, (result,c) =>{
     if(!result.success){

@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { OrdersService, getOrderService,createOrderService,updateOrderService,deleteOrderService } from "./orders.service";
+import { OrdersService, getOrderService,createOrderService,updateOrderService,deleteOrderService,getDetailedOrderInfo } from "./orders.service";
 
 export const listAllOrders= async (c: Context) => {
     try{
@@ -83,5 +83,15 @@ export const deleteOrder = async (c: Context) => {
         return c.json({message: "Order deleted successfully"}, 200)
     } catch(error: any){
         return c.json({message: error.message}, 400)
+    }
+}
+
+export const getDetailedOrderInfoController = async (c: Context) => {
+    try{
+        const orderInfo =await getDetailedOrderInfo();
+        return c.json(orderInfo, 200);
+
+    } catch(error: any){
+       return c.json({message: error.message}, 400)
     }
 }
