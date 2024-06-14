@@ -54,7 +54,7 @@ const custonTimeoutException = () =>
     new HTTPException(408, {
         message:`Request timeout after waiting for more than 10 seconds`
     });
-    app.get('/', (c) => {
+    app.get('/api', (c) => {
         return c.html(
             html`
             <style>
