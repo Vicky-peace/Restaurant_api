@@ -54,54 +54,9 @@ const custonTimeoutException = () =>
     new HTTPException(408, {
         message:`Request timeout after waiting for more than 10 seconds`
     });
-    app.get('/', (c) => {
-        return c.html(
-            html`
-            <style>
-                body, html {
-                    height: 100%;
-                    margin: 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-family: Arial, sans-serif;
-                }
-                .container {
-                    text-align: center;
-                    border: 1px solid #ddd;
-                    padding: 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                }
-                ul {
-                    list-style-type: none;
-                    padding: 0;
-                }
-                li {
-                    margin-bottom: 10px;
-                }
-                a {
-                    color: #007BFF;
-                    text-decoration: none;
-                }
-                a:hover {
-                    text-decoration: underline;
-                }
-            </style>
-            <div class="container">
-                <h1>Welcome to the Restaurant Food Delivery API</h1>
-                <ul>
-                    <li><b>Message:</b> Welcome to my Restaurant API</li>
-                    <li><b>Author:</b> Victor Peace Kipkorir</li>
-                    <li><b>Version:</b> 1.0</li>
-                    <li><b>Description:</b> This is a simple API for a restaurant food delivery system</li>
-                    <li><b>GitHub:</b> <a href="https://github.com/Vicky-peace/Restaurant_api">Github link</a></li>
-                </ul>
-            </div>
-            `
-        );
-    });
+    
    
+    
     //Mount the auth router
     app.route('/', authRouter);
 
@@ -128,9 +83,21 @@ const custonTimeoutException = () =>
     app.route('/', orderServiceRoute)
 
 
+    import { readFileSync } from 'fs';
+
+    app.get('/', async (c) => {
+      try {
+        let html = readFileSync('./index.html', 'utf-8');
+        return c.html(html);
+    
+      } catch (error: any) {
+        return c.json({ error: error.message, status: 500 });
+    
+      }
+    });
+
     serve({
         fetch: app.fetch,
         port: Number(process.env.PORT)
     })
 console.log(`Server is running on port ${process.env.PORT}`)
-

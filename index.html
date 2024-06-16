@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant API Documentation</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        :root.dark {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --link-color: #80cbc4;
+            --secondary-color: #333;
+            --accent-color: #bdbdbd;
+            --box-bg-color: #1f1f1f;
+        }
+
+        :root.light {
+            --bg-color: #fff;
+            --text-color: #333;
+            --link-color: #1a73e8;
+            --secondary-color: #f5f5f5;
+            --accent-color: #666;
+            --box-bg-color: #fff;
+        }
+
+        header {
+            background-color: var(--box-bg-color);
+            color: var(--text-color);
+            padding: 1.5em 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+           
+        }
+        nav{
+          display: flex;
+          justify-content: center;
+          align-items: center ;
+        }
+        nav ul {
+            display: flex;
+            gap: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li{
+          font-size: 30px;
+          font-weight: bold;
+        }
+
+        nav ul li a {
+            color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            color: var(--link-color);
+        }
+
+        main {
+            background-color: var(--box-bg-color);
+            margin: 2em auto;
+            max-width: 900px;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        pre {
+            background-color: var(--secondary-color);
+        }
+
+        code {
+            color: var(--link-color);
+        }
+
+        #contact a {
+            color: var(--link-color);
+        }
+
+        footer {
+            background-color: var(--box-bg-color);
+            color: var(--accent-color);
+            text-align: center;
+            padding: 1em 0;
+        }
+    </style>
+    <script>
+        function toggleTheme() {
+            const root = document.documentElement;
+            if (root.classList.contains('dark')) {
+                root.classList.replace('dark', 'light');
+            } else {
+                root.classList.replace('light', 'dark');
+            }
+        }
+
+        function navigateToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Set initial theme based on user preference or default
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.add('light');
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h2>Victor Peace Kipkorir</h2>
+        <h1>Restaurant API Documentation</h1>
+        <button onclick="toggleTheme()">Toggle Theme</button>
+        <nav>
+            <ul>
+                <li><a onclick="navigateToSection('overview')">Overview</a></li>
+                <li><a onclick="navigateToSection('endpoints')">Endpoints</a></li>
+                <li><a onclick="navigateToSection('examples')">Examples</a></li>
+                <li><a onclick="navigateToSection('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+         <section id="overview">
+        <h2>Overview</h2>
+        <p>
+          Welcome to the Restaurant API documentation. This API provides
+          comprehensive access to a database of restaurant information,
+          including details about cities, addresses, categories, menus, and
+          more. It is designed to be a robust tool for developers building
+          restaurant review applications, city guides, and various other
+          projects.
+        </p>
+        <p>
+          The Restaurant API offers endpoints to retrieve, create, update, and
+          delete data, ensuring seamless integration with your application. By
+          using this API, you can leverage a rich set of features to enhance
+          your user experience and provide accurate and up-to-date restaurant
+          information.
+        </p>
+        <p>
+          Authentication is required for all requests. Ensure you include your
+          API key, which you received during registration, in the request
+          headers to authenticate your access.
+        </p>
+      </section>
+      <section id="endpoints">
+        <h2>Endpoints</h2>
+
+        <h3>Test Routes</h3>
+        <p>Test the API connectivity.</p>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/time</code></pre>
+
+        <h3>States</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/states</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/states/2</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/states</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/states/24</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/states/11</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/states/1/cities</code></pre>
+
+        <h3>Cities</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/cities</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/cities/8</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/cities</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/cities/8</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/cities/11</code></pre>
+
+        <h3>Addresses</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/addresses</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/addresses/10</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/addresses</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/addresses/10</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/addresses/10</code></pre>
+
+        <h3>Restaurants</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/restaurants</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/restaurants/1</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/restaurants</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/restaurants/5</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/restaurants/6</code></pre>
+
+        <h3>Users</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/users</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/users/4</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/users</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/users/4</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/users/5</code></pre>
+
+        <h3>Categories</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/categories</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/categories/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/categories</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/categories/5</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/categories/5</code></pre>
+
+        <h3>Menu</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/menu</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/menu/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/menu</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/menu/5</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/menu/5</code></pre>
+
+        <h3>Restaurant Owners</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/restaurantOwners</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/restaurantOwners/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/restaurantOwners</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/restaurantOwners/5</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/restaurantOwners/5</code></pre>
+
+        <h3>Drivers</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/drivers</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/drivers/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/drivers</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/drivers/5</code></pre>
+
+        <h3>Orders</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/orders</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/orders/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/orders</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/orders/5</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/orders/5</code></pre>
+
+        <h3>Order Items</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/orderMenuItems</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/orderMenuItems/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/orderMenuItems</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/orderMenuItems/5</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/orderMenuItems/5</code></pre>
+
+        <h3>Status Catalog</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/statusCatalog</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/statusCatalog/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/statusCatalog</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/statusCatalog/5</code></pre>
+
+        <h3>Order Status</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/orderStatus</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/orderStatus/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/orderStatus</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/orderStatus/5</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/orderStatus/5</code></pre>
+
+        <h3>Comments</h3>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/comments</code></pre>
+        <pre><code>GET https://restaurantsystem.azurewebsites.net/comments/5</code></pre>
+        <pre><code>POST https://restaurantsystem.azurewebsites.net/comments</code></pre>
+        <pre><code>PUT https://restaurantsystem.azurewebsites.net/comments/5</code></pre>
+        <pre><code>DELETE https://restaurantsystem.azurewebsites.net/comments/5</code></pre>
+      </section>
+      <section id="examples">
+        <h2>Examples</h2>
+        <p>Example requests will be provided here...</p>
+      </section>
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>
+          For any questions or support, please contact us at
+          <a href="mailto:support@info.tech"
+            >support@info.tech</a
+          >.
+        </p>
+      </section>
+    </main>
+    <footer>
+        <p>© 2024 info.tech. All rights reserved. | <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>
