@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, serial, varchar, text, integer, decimal, date, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, bigint,serial, varchar, text, integer, decimal, date, timestamp, boolean } from "drizzle-orm/pg-core";
 import { pgEnum } from 'drizzle-orm/pg-core';
 
 // Restaurant Table
@@ -130,6 +130,7 @@ export const StatusCatalog = pgTable('status_catalog', {
 export const roleEnum = pgEnum("role", ["user","admin"]);
 
 // Users Table
+// Extend the pgTable definition for Users to include new fields
 export const Users = pgTable('users', {
     id: serial("id").primaryKey(),
     name: varchar("name", { length: 255 }).notNull(),
@@ -139,9 +140,12 @@ export const Users = pgTable('users', {
     email_verified: boolean("email_verified").default(false),
     confirmation_code: varchar("confirmation_code", { length: 6 }),
     password: varchar("password", { length: 255 }).notNull(),
+    //resetToken: varchar("resetToken", { length: 255 }), // new field
+    //expireToken: varchar("expireToken"), // new field
     created_at: timestamp("created_at").defaultNow(),
     updated_at: timestamp("updated_at").defaultNow(),
 });
+
 
 // RestaurantOwner Table
 export const RestaurantOwner = pgTable('restaurant_owner', {

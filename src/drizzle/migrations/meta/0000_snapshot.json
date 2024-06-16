@@ -1,5 +1,5 @@
 {
-  "id": "21fd527b-2f5f-4f17-807d-960b973d96a9",
+  "id": "cf437241-e12e-4309-9d9b-d89bacd9ab37",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -998,6 +998,18 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
+        },
+        "resetToken": {
+          "name": "resetToken",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expireToken": {
+          "name": "expireToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

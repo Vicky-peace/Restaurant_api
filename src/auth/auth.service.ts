@@ -4,7 +4,7 @@ import { db } from '../drizzle/db';
 import {  AuthOnUsersTable,Users, TSUser, TIUser} from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
 import {userSchema, authOnUsersSchema, loginSchema } from '../validator'; // Import the Zod schemas
-import { sendRegistrationEmail } from '../nodeMailer/mailer';
+import { sendEmail, sendRegistrationEmail } from '../nodeMailer/mailer';
 
 
 
@@ -115,3 +115,35 @@ export const verifyToken = (token: string) => {
 
 
 // There is a bug on register user function, can you find it? 🤔
+
+// export const requestPasswordReset = async (email: string) => {
+//     const user = await db.select().from(Users).where(eq(Users.email, email)).execute();
+//     if(!user){
+//         throw new Error('User not found');
+//     }
+
+//     const resetToken = crypto.randomUUID();
+//     const expireToken = Date.now() + 3600000; // 1 hour
+
+
+//     await db.update(Users).set({resetToken,  expireToken}).where(eq(Users.email, email)).execute();
+//     const resetUrl = `http://localhost:8080/reset/${resetToken}`;
+
+//     await sendEmail(
+//         email, 'Password Reset',
+//       `Click on the link to reset your password: ${resetUrl}`);
+
+//       return resetUrl;
+// };
+
+// export const resetPassword = async (token: string, newPassword: string) => {
+//     const user = await db.select().from(Users).where({ resetToken: token, expireToken: { $gt: Date.now() } }).first();
+//     if (!user) {
+//         throw new Error("Token is invalid or has expired");
+//     }
+
+//     const hashedPassword = await bcrypt.hash(newPassword, 10);
+//     await db.update('Users').set({ password: hashedPassword, resetToken: null, expireToken: null }).where({ id: user.id });
+
+//     return "Password has been successfully reset";
+// };
