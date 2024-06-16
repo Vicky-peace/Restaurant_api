@@ -34,7 +34,7 @@ This project is a RESTful API built with the Hono framework, using Drizzle ORM f
 
 2. Install dependencies:
     ```sh
-    npm install
+    pnpm install
     ```
 
 3. Set up the PostgreSQL database and create a `.env` file with the following variables:
@@ -49,12 +49,12 @@ This project is a RESTful API built with the Hono framework, using Drizzle ORM f
 ## Usage
 1. Run database migrations:
     ```sh
-    npm run migrate
+    pnpm run migrate
     ```
 
 2. Start the server:
     ```sh
-    npm start
+    pnpm start
     ```
 
 The server should now be running on `http://localhost:3000`.

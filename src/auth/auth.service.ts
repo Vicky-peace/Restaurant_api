@@ -4,6 +4,7 @@ import { db } from '../drizzle/db';
 import {  AuthOnUsersTable,Users, TSUser, TIUser} from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
 import {userSchema, authOnUsersSchema, loginSchema } from '../validator'; // Import the Zod schemas
+import { sendRegistrationEmail } from '../nodeMailer/mailer';
 
 
 
@@ -48,12 +49,18 @@ export const registerUser = async (user: any) => {
         await db
             .insert(AuthOnUsersTable)
             .values({
-                userId: userId, // Make sure this matches the column name in the table definition
+                userId: userId, 
                 password: hashedPassword,
                 email: user.email,
                 role: user.role || 'user', // Default role if not provided
             })
             .execute();
+
+            //send a registration email
+            const emailSubject = "Welcome to Our Restaurant Platform!";
+            const evetName = "Our Restaurant Platform";
+            const emailResponse = await sendRegistrationEmail(user.email, evetName);
+            console.log(emailResponse);
 
         return 'User registered successfully';
     } catch (error) {
