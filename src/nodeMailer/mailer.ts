@@ -34,7 +34,7 @@ export const sendEmail = async (email: string, subject: string, message: string)
 };
 
 
-export interface EnailOptions {
+export interface EmailOptions {
     from: string;
     to: string;
     subject: string;

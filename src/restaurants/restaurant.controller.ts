@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { getRestaurantService, getSingleRestaurantService,createRestaurantService, updateRestaurantService,deleteRestaurantService } from "./restaurant.service";
+import { getRestaurantService, getSingleRestaurantService,createRestaurantService, updateRestaurantService,deleteRestaurantService,searchRestaurantService as searchRestaurantLogic } from "./restaurant.service";
 
 export const listRestaurants = async (c: Context) => {
     try{
@@ -71,4 +71,9 @@ export const deleteRestaurant = async (c: Context) => {
     } catch(error: any){
         return c.json({error: error?.message}, 400)
     }
+}
+
+
+export const searchRestaurantController = async (c: Context) => {
+    return await searchRestaurantLogic(c);
 }
